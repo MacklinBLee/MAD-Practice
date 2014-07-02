@@ -8,22 +8,36 @@ import java.util.*;
 public class MySet implements Set<Object> {
 	
 	private Object[] mySet;
-	private int size; 
+	private Object[] temp;
+	private int size, expand; 
 	
 	public MySet() {
-		mySet = new Object[10];
+		expand=10;
+		mySet = new Object[expand];
+		temp = new Object[expand*2];
 		size=0; 
+		
 	
 	}
 
 	@Override
 	public boolean add(Object arg0) {
-		//if doesnt exist
-		mySet[size]=arg0;
-		size++;
-		return true;
-		
-		
+		if (contains(arg0)==false) {
+			mySet[size]=arg0;
+			size++;
+			
+			if (size==expand){ //expand array
+				expand=expand*2;
+				for (int x=0 ; x<size; x++) {
+					temp[x]=mySet[x]; 
+				}
+				mySet = new Object[expand];
+				mySet=temp;
+				temp = new Object [expand*2];
+			}	
+			return true;
+		}
+		else 
 		return false;
 	}
 
@@ -41,7 +55,11 @@ public class MySet implements Set<Object> {
 
 	@Override
 	public boolean contains(Object arg0) {
-		// TODO Auto-generated method stub
+		for (int x =0; x<size; x++ ) {			
+			if (arg0.equals(mySet[x])){
+				return true;
+			}
+		}
 		return false;
 	}
 
