@@ -1,7 +1,6 @@
 package demo;
 
 import static org.junit.Assert.*;
-import junit.framework.Assert;
 
 import org.junit.Test;
 
@@ -28,6 +27,8 @@ public class MySetTest {
 			s.add(i);
 			assertEquals(i+1, s.size());
 		}
+		assertTrue(s.contains(1));
+		assertTrue(s.contains(9999));
 	}
 	
 	@Test
@@ -45,9 +46,9 @@ public class MySetTest {
 		MySet s = new MySet();
 		s.add(1);
 		assertEquals(1, s.size());
-		assertEquals(false, s.add(1));
+		assertFalse(s.add(1));
 		assertEquals(1, s.size());
-		assertEquals(true, s.add(2));
+		assertTrue(s.add(2));
 		assertEquals(2, s.size());
 	}
 	
