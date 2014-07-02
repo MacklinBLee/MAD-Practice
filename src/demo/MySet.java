@@ -8,14 +8,22 @@ import java.util.*;
 public class MySet implements Set<Object> {
 	
 	private Object[] mySet;
+	private int size; 
 	
 	public MySet() {
 		mySet = new Object[10];
+		size=0; 
+	
 	}
 
 	@Override
 	public boolean add(Object arg0) {
-		// TODO Auto-generated method stub
+		//if doesnt exist
+		mySet[size]=arg0;
+		size++;
+		return true;
+		
+		
 		return false;
 	}
 
@@ -45,8 +53,8 @@ public class MySet implements Set<Object> {
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size==0;
+		
 	}
 
 	@Override
@@ -75,8 +83,9 @@ public class MySet implements Set<Object> {
 
 	@Override
 	public int size() {
+		
 		// TODO Auto-generated method stub
-		return 1;
+		return size;
 	}
 
 	@Override
