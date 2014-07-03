@@ -9,13 +9,11 @@ public class MySet implements Set<Object> {
 	
 	
 	private Object[] mySet;
-	private Object[] temp;
-	private int size, expand; 
+	
+	private int size;
 	
 	public MySet() {
-		expand=10;
-		mySet = new Object[expand];
-		temp = new Object[expand*2];
+		mySet = new Object[10];
 		size=0; 
 		
 	
@@ -23,19 +21,21 @@ public class MySet implements Set<Object> {
 
 	@Override
 	public boolean add(Object arg0) {
+
 		if (contains(arg0)==false) {
-			mySet[size]=arg0;
-			size++;
-			
-			if (size==expand){ //expand array
-				expand=expand*2;
+			if (size==mySet.length){ //expand array
+				Object[] temp = new Object[size*2];
 				for (int x=0 ; x<size; x++) {
 					temp[x]=mySet[x]; 
 				}
+				int expand =size*2;
 				mySet = new Object[expand];
 				mySet=temp;
-				temp = new Object [expand*2];
-			}	
+			}
+
+			mySet[size]=arg0;
+			size++;
+
 			return true;
 		}
 		else 
@@ -95,17 +95,14 @@ public class MySet implements Set<Object> {
 		else {
 			for (int x =0; x<size; x++ ) {			
 				if (arg0.equals(mySet[x])){
-					for (; x<size;x++) {
-						if (x!= expand) {
-							mySet[x]=mySet[x+1];
-							mySet[size]=null;
-							size--;
-						}
-					}
+					mySet[x]=mySet[size];
+					size--;
+					return true;	
 				}
+				
 			}
-			return true;
-		}
+			return true; //code wouldnt work without this..?
+			}
 	}
 
 	@Override
