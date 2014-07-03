@@ -7,6 +7,7 @@ import java.util.*;
  */
 public class MySet implements Set<Object> {
 	
+	
 	private Object[] mySet;
 	private Object[] temp;
 	private int size, expand; 
@@ -49,8 +50,13 @@ public class MySet implements Set<Object> {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		for (int x =0; x<size; x++ ) {			
+			mySet[x]=null; 
+		}
+		size=0;
+		return;
+
+
 	}
 
 	@Override
@@ -83,8 +89,23 @@ public class MySet implements Set<Object> {
 
 	@Override
 	public boolean remove(Object arg0) {
-		// TODO Auto-generated method stub
-		return false;
+
+		if (contains(arg0)==false) {
+			return false;}
+		else {
+			for (int x =0; x<size; x++ ) {			
+				if (arg0.equals(mySet[x])){
+					for (; x<size;x++) {
+						if (x!= expand) {
+							mySet[x]=mySet[x+1];
+							mySet[size]=null;
+							size--;
+						}
+					}
+				}
+			}
+			return true;
+		}
 	}
 
 	@Override
