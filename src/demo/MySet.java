@@ -19,27 +19,33 @@ public class MySet implements Set<Object> {
 	
 	}
 
+
+
+	public void expand() {
+		if (size==mySet.length){ //expand array
+			Object[] temp = new Object[size*2];
+			for (int x=0 ; x<size; x++) {
+				temp[x]=mySet[x]; 
+			}
+			int expand =size*2;
+			mySet = new Object[expand];
+			mySet=temp;
+		} else {
+			return;
+		}
+	}
+
 	@Override
 	public boolean add(Object arg0) {
 
 		if (contains(arg0)==false) {
-			if (size==mySet.length){ //expand array
-				Object[] temp = new Object[size*2];
-				for (int x=0 ; x<size; x++) {
-					temp[x]=mySet[x]; 
-				}
-				int expand =size*2;
-				mySet = new Object[expand];
-				mySet=temp;
-			}
-
+			expand();//expand 
 			mySet[size]=arg0;
 			size++;
-
 			return true;
+		} else {
+			return false;
 		}
-		else 
-		return false;
 	}
 
 	@Override
@@ -55,8 +61,6 @@ public class MySet implements Set<Object> {
 		}
 		size=0;
 		return;
-
-
 	}
 
 	@Override
@@ -90,20 +94,18 @@ public class MySet implements Set<Object> {
 	@Override
 	public boolean remove(Object arg0) {
 
-		if (contains(arg0)==false) {
-			return false;}
-		else {
+		if (contains(arg0)==true) {
 			for (int x =0; x<size; x++ ) {			
 				if (arg0.equals(mySet[x])){
 					mySet[x]=mySet[size];
 					size--;
 					return true;	
 				}
-				
 			}
-			return true; //code wouldnt work without this..?
-			}
+		}
+		return false;
 	}
+
 
 	@Override
 	public boolean removeAll(Collection<?> arg0) {
