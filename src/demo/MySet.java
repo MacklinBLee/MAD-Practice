@@ -14,38 +14,28 @@ public class MySet implements Set<Object> {
 	
 	public MySet() {
 		mySet = new Object[10];
-		size=0; 
-		
-	
+		size = 0; 
 	}
 
-
-
 	public void expand() {
-		if (size==mySet.length){ //expand array
-			Object[] temp = new Object[size*2];
-			for (int x=0 ; x<size; x++) {
-				temp[x]=mySet[x]; 
-			}
-			int expand =size*2;
-			mySet = new Object[expand];
-			mySet=temp;
-		} else {
-			return;
+		Object[] temp = new Object[size*2];
+		for (int x = 0 ; x<size; x++) {
+			temp[x] = mySet[x]; 
 		}
+		mySet = new Object[size*2];
+		mySet = temp;
 	}
 
 	@Override
 	public boolean add(Object arg0) {
-
-		if (contains(arg0)==false) {
-			expand();//expand 
-			mySet[size]=arg0;
+		if (arg0 == null) return false;
+		if (! contains(arg0)) {
+			if (size == mySet.length) expand();//expand 
+			mySet[size] = arg0;
 			size++;
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	@Override
@@ -60,19 +50,34 @@ public class MySet implements Set<Object> {
 			mySet[x]=null; 
 		}
 		size=0;
-		return;
 	}
 
 	@Override
 	public boolean contains(Object arg0) {
-		for (int x =0; x<size; x++ ) {			
-			if (arg0.equals(mySet[x])){
-				return true;
-			}
-		}
-		return false;
+		if (search(arg0) == null) return false;
+		return true;
 	}
 
+	@Override
+	public boolean remove(Object arg0) {
+		Integer index = search (arg0);
+		if (index == null) return false;
+		mySet[index] = mySet[size];
+		size--;
+		return true;
+	}
+
+	private Integer search (Object arg0) {
+		if (arg0 == null) return null;
+		for (int x = 0; x<size; x++) {
+			if (arg0.equals(mySet[x])) {
+				return x;
+			}
+		}
+		return null;
+
+	}
+	
 	@Override
 	public boolean containsAll(Collection<?> arg0) {
 		// TODO Auto-generated method stub
@@ -81,8 +86,7 @@ public class MySet implements Set<Object> {
 
 	@Override
 	public boolean isEmpty() {
-		return size==0;
-		
+		return size == 0;
 	}
 
 	@Override
@@ -90,22 +94,6 @@ public class MySet implements Set<Object> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public boolean remove(Object arg0) {
-
-		if (contains(arg0)==true) {
-			for (int x =0; x<size; x++ ) {			
-				if (arg0.equals(mySet[x])){
-					mySet[x]=mySet[size];
-					size--;
-					return true;	
-				}
-			}
-		}
-		return false;
-	}
-
 
 	@Override
 	public boolean removeAll(Collection<?> arg0) {

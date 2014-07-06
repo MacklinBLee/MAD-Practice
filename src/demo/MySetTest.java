@@ -2,6 +2,8 @@ package demo;
 
 import static org.junit.Assert.*;
 
+import java.util.Set;
+
 import org.junit.Test;
 
 public class MySetTest {
@@ -61,6 +63,19 @@ public class MySetTest {
 		assertTrue(s.contains("Macklin"));
 		assertTrue(s.remove("Luke"));
 		assertFalse(s.contains("Luke"));
+	}
+	
+	@Test
+	public void testContainsNull() {
+		MySet s = new MySet();
+		s.add(1);
+		assertFalse(s.contains(null));
+	}
+	
+	@Test
+	public void testAddNull() {
+		MySet s = new MySet();
+		assertFalse(s.add(null));
 	}
 
 }
