@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Implementation of a Singly linked list
+ * Implementation of a Doubly linked list
  * See http://en.wikipedia.org/wiki/Linked_list
  */
 public class MyLinkedList implements List<Object> {
