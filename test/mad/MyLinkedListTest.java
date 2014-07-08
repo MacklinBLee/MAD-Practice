@@ -2,6 +2,7 @@ package mad;
 
 import junit.framework.TestCase;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class MyLinkedListTest extends TestCase {

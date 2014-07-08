@@ -11,23 +11,14 @@ import java.util.ListIterator;
  */
 public class MyLinkedList implements List<Object> {
 
-    /**
-     * Use this inner class for your LinkedList Nodes
-     */
-    class Node {
-        Object item;
-        Node next;
-        Node prev;
-
-        Node(Object item, Node next, Node prev) {
-            this.item = item;
-            this.next = next;
-            this.prev = prev;
-        }
-    }
-
+    private int size;
+    private Node head;  
+    private Node tail;
+    
     public MyLinkedList() {
-        // default constructor
+    	size = 0;
+    	
+    	// default constructor
     }
 
     /**
@@ -39,7 +30,7 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -49,6 +40,7 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public boolean isEmpty() {
+    	if (size == 0) return true;
         return false;
     }
 
@@ -69,7 +61,8 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public boolean contains(Object o) {
-        return false;
+    	if (indexOf(o) != -1) return true;
+    	return false;
     }
 
 
@@ -96,8 +89,19 @@ public class MyLinkedList implements List<Object> {
      *                                       prevents it from being added to this list
      */
     @Override
-    public boolean add(Object o) {
-        return false;
+    public boolean add(Object o) {    	
+    	Node current = new Node(o, null, null);
+
+    	if (head == null) {
+    		head = current;
+    		tail=current;
+    	} else {
+    		tail.next = current;
+    		current.prev = tail;
+    		tail=current;
+    	}
+    	size++;
+    	return true;
     }
 
     /**
@@ -135,7 +139,7 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public void clear() {
-
+    	size=0;
     }
 
     /**
@@ -235,7 +239,14 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public int indexOf(Object o) {
-        return 0;
+    	int index=0;
+    	Node current = head;
+    	while (current != null) { 
+    		if ((o == null && o == current.item) || (o != null && o.equals(current.item))) return index;
+    		index++;
+    		current = current.next;
+    	}
+        return -1;
     }
 
     /**
@@ -257,7 +268,14 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+    	int index=size-1;
+    	Node current = tail;
+    	while (current != null) { 
+    		if ((o == null && o == current.item) || (o != null && o.equals(current.item))) return index;
+    		index--;
+    		current = current.prev;
+    	}
+        return -1;
     }
 
     /**
