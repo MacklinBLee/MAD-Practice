@@ -140,6 +140,8 @@ public class MyLinkedList implements List<Object> {
     @Override
     public void clear() {
     	size=0;
+    	head = null;
+    	tail = null;
     }
 
     /**
@@ -152,9 +154,19 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public Object get(int index) {
-        return null;
+    	Node current = head;
+    	if (index>size-1) {
+    		throw new IndexOutOfBoundsException();
+    	}
+    	for (int x=0; x<index; x++) {
+    		current = current.next;
+    	}
+        return current.item;
     }
 
+	
+	
+    
     /**
      * Replaces the element at the specified position in this list with the
      * specified element (optional operation).
@@ -175,9 +187,31 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public Object set(int index, Object element) {
-        return null;
+    	/*Node current = head;
+    	if (index>size-1) {
+    		throw new IndexOutOfBoundsException();
+    	}
+    	for (int x=0; x<index; x++) {
+    		current = current.next;
+    	}
+    	*/
+    	Node current= IndexLocation(index);
+    	Object x = current.item;
+        current.item=element;
+    	return x;
+
     }
 
+    private Node IndexLocation(int index) {
+    	Node current = head;
+    	if (index>size-1) {
+    		throw new IndexOutOfBoundsException();
+    	}
+    	for (int x=0; x<index; x++) {
+    		current = current.next;
+    	}
+    	return current;
+    }
     /**
      * Inserts the specified element at the specified position in this list
      * (optional operation).  Shifts the element currently at that position
@@ -199,7 +233,21 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public void add(int index, Object element) {
-
+    	Node addition = new Node(element, null, null);
+    	/*Node current = head;
+    	if (index>size-1) {
+    		throw new IndexOutOfBoundsException();
+    	}
+    	for (int x=0; x<index; x++) {
+    		current = current.next;
+    	}
+    	*/
+    	Node current= IndexLocation(index);
+    	addition.next = current;
+    	addition.prev=current.prev;
+    	(current.prev).next=addition;
+    	current.prev=addition;
+    	size++;
     }
 
     /**
