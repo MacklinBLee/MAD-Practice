@@ -127,7 +127,18 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public boolean remove(Object o) {
-        return false;
+    	isEmpty();
+    	Node current = head;
+    	for (int x=0; x<size; x++) {
+    		if (current.item==o){
+    			if (current.prev!= null) (current.prev).next=current.next;
+    			if (current.next!= null) (current.next).prev=current.prev;
+    			size--;
+    			return true;
+    		}
+    		current = current.next;	
+    	}
+    	return false;
     }
 
     /**
@@ -195,14 +206,14 @@ public class MyLinkedList implements List<Object> {
     		current = current.next;
     	}
     	*/
-    	Node current= IndexLocation(index);
+    	Node current= getNode(index);
     	Object x = current.item;
         current.item=element;
     	return x;
 
     }
 
-    private Node IndexLocation(int index) {
+    private Node getNode(int index) {
     	Node current = head;
     	if (index>size-1) {
     		throw new IndexOutOfBoundsException();
@@ -234,15 +245,7 @@ public class MyLinkedList implements List<Object> {
     @Override
     public void add(int index, Object element) {
     	Node addition = new Node(element, null, null);
-    	/*Node current = head;
-    	if (index>size-1) {
-    		throw new IndexOutOfBoundsException();
-    	}
-    	for (int x=0; x<index; x++) {
-    		current = current.next;
-    	}
-    	*/
-    	Node current= IndexLocation(index);
+    	Node current= getNode(index);
     	addition.next = current;
     	addition.prev=current.prev;
     	(current.prev).next=addition;
@@ -265,7 +268,12 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public Object remove(int index) {
-        return null;
+    	Node current= getNode(index);
+    	Object x = current.item;
+    	if (current.prev!= null) (current.prev).next=current.next;
+		if (current.next!= null) (current.next).prev=current.prev;
+		size--;
+    	return x;
     }
 
     /**
