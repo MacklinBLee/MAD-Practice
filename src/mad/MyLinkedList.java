@@ -98,7 +98,7 @@ public class MyLinkedList implements List<Object> {
     	} else {
     		tail.next = current;
     		current.prev = tail;
-    		tail=current;
+    		tail = current;
     	}
     	size++;
     	return true;
@@ -129,10 +129,24 @@ public class MyLinkedList implements List<Object> {
     public boolean remove(Object o) {
     	isEmpty();
     	Node current = head;
-    	for (int x=0; x<size; x++) {
-    		if (current.item==o){
-    			if (current.prev!= null) (current.prev).next=current.next;
-    			if (current.next!= null) (current.next).prev=current.prev;
+    	for (int x = 0; x < size; x++) {
+    		if (current.item == o){
+    			if (current.prev == null && current.next == null) { // forever alone
+    				clear();
+    				return true;
+    				}
+    			if (current.prev == null) {
+    				(current.next).prev=null; // first
+    				size--;
+    				return true;
+    			}
+    			if (current.next == null) {
+    				(current.prev).next=null; // last
+    				size--;
+    				return true;
+    			}
+    			(current.prev).next=current.next; //in the middle
+    			(current.next).prev=current.prev;
     			size--;
     			return true;
     		}
@@ -198,14 +212,6 @@ public class MyLinkedList implements List<Object> {
      */
     @Override
     public Object set(int index, Object element) {
-    	/*Node current = head;
-    	if (index>size-1) {
-    		throw new IndexOutOfBoundsException();
-    	}
-    	for (int x=0; x<index; x++) {
-    		current = current.next;
-    	}
-    	*/
     	Node current= getNode(index);
     	Object x = current.item;
         current.item=element;
@@ -270,10 +276,24 @@ public class MyLinkedList implements List<Object> {
     public Object remove(int index) {
     	Node current= getNode(index);
     	Object x = current.item;
-    	if (current.prev!= null) (current.prev).next=current.next;
-		if (current.next!= null) (current.next).prev=current.prev;
-		size--;
-    	return x;
+    	if (current.prev == null && current.next == null) { // forever alone
+    		clear();
+    		return x;
+    	}
+    	if (current.prev == null) {
+    		(current.next).prev=null; // first
+    		size--;
+    		return x;
+    	}
+    	if (current.next == null) {
+    		(current.prev).next=null; // last
+    		size--;
+    		return x;
+    	}
+    	(current.prev).next=current.next; //in the middle
+    	(current.next).prev=current.prev;
+    	size--;
+    	return x;    
     }
 
     /**
